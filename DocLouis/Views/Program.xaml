@@ -25,7 +25,7 @@
 			</VisualStateManager.VisualStateGroups>
 
 			<StackPanel x:Name="contentPanel" Margin="0,32,0,0">
-				<TextBlock x:Name="trainingName" Margin="0,0,0,40" FontSize="24"/>
+				<TextBlock x:Name="trainingName" Margin="8,0,0,40" FontSize="24"/>
 				<ListView x:Name="listView" Height="226">
 					<ComboBox x:Name="type" Width="330" SelectionChanged="RefreshUI">
 						<ComboBoxItem Content="duration" IsSelected="True"/>
