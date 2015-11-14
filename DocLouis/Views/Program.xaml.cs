@@ -22,7 +22,7 @@ namespace DocLouis {
 
 		protected override void OnNavigatedTo(NavigationEventArgs e) {
 			base.OnNavigatedTo(e);
-			trainingName.Text = (String)e.Parameter;
+			trainingName.Text = (String) e.Parameter + "'s Training";
 		}
 
 		private void RefreshUI(object sender, SelectionChangedEventArgs e) {
@@ -83,8 +83,8 @@ namespace DocLouis {
 					sentence += duration_rep.Text + " seconds.";
 					break;
 				case "repetitions":
-					sentence += ". Do " + series.Text + " series of " + duration_rep.Text + " repetitions.";
-					sentence += "Take " + break_duration.Text + " seconds of break between each serie.";
+					sentence += ". Do " + series.Text + " series of " + duration_rep.Text + " repetitions. ";
+					sentence += "Take " + break_duration.Text + " seconds of break between series.";
 					break;
 				case "":
 				default:
