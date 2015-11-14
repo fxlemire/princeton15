@@ -30,7 +30,7 @@ namespace DocLouis
         }
 
 		private void Button_Click(object sender, RoutedEventArgs e) {
-			rootFrame.Navigate(typeof(Exercise), trainingNameInput.Text);
+			rootFrame.Navigate(typeof(Program), trainingNameInput.Text);
 		}
 	}
 }
