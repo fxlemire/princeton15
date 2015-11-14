@@ -20,7 +20,6 @@
 						<AdaptiveTrigger MinWindowWidth="0" />
 					</VisualState.StateTriggers>
 					<VisualState.Setters>
-						<Setter Target="inputTrainingNamePanel.Orientation" Value="Vertical"/>
 						<Setter Target="inputButton.Margin" Value="0,4,0,0"/>
 					</VisualState.Setters>
 				</VisualState>
@@ -30,10 +29,8 @@
 		<StackPanel x:Name="contentPanel" Margin="8,32,0,0">
 			<TextBlock Text="Welcome to Doc Louis' Training Program" Margin="0,0,0,40"/>
 			<TextBlock Text="What's the name of your training?"/>
-			<StackPanel x:Name="inputTrainingNamePanel" Orientation="Horizontal" Margin="0,20,0,20">
-				<TextBox x:Name="trainingNameInput" Width="206" HorizontalAlignment="Left"/>
-				<Button x:Name="inputButton" Content="Configure Training" Width="142" Click="Button_Click"/>
-			</StackPanel>
+			<TextBox x:Name="trainingNameInput" HorizontalAlignment="Stretch" Margin="8,20,8,20"/>
+			<Button x:Name="inputButton" HorizontalAlignment="Stretch" Content="Configure Training" Click="Button_Click" Margin="8,0,8,0"/>
 			<TextBlock x:Name="trainingNameOutput"/>
 		</StackPanel>
 	</Grid>
