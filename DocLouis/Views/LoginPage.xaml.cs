@@ -73,26 +73,6 @@ namespace DocLouis {
 			}
 		}
 
-		//		private async System.Threading.Tasks.Task AuthenticateAsync(String service) {
-		//			string message;
-		//			try {
-		//				if (service.Equals("facebook")) {
-		//					_user = await App.MobileService.LoginAsync(MobileServiceAuthenticationProvider.Facebook);
-		//				} else if (service.Equals("google")) {
-		//					_user = await App.MobileService.LoginAsync(MobileServiceAuthenticationProvider.Google);
-		//				} else {
-		//					_user = await App.MobileService.LoginAsync(MobileServiceAuthenticationProvider.Twitter);
-		//				}
-		//				message = string.Format("You are now signed in - {0}", _user.UserId);
-		//			} catch (InvalidOperationException) {
-		//				message = "You must log in. Login Required";
-		//			}
-		//
-		//			var dialog = new MessageDialog(message);
-		//			dialog.Commands.Add(new UICommand("OK"));
-		//			await dialog.ShowAsync();
-		//		}
-
 		private async void ButtonLogin_Click(object sender, RoutedEventArgs e) {
 			// Login the user and then load data from the mobile service.
 			Button signupButton = (Button)sender;
