@@ -25,13 +25,22 @@
 				</VisualState>
 			</VisualStateGroup>
 		</VisualStateManager.VisualStateGroups>
-		
+
 		<StackPanel x:Name="contentPanel" Margin="8,32,0,0">
-			<TextBlock Text="Welcome to Doc Louis' Training Program" Margin="0,0,0,40"/>
+			<TextBlock Text="Welcome to Doc Louis' Training Program" FontSize="18" Margin="0,0,0,40"/>
 			<TextBlock Text="What's the name of your training?"/>
 			<TextBox x:Name="trainingNameInput" HorizontalAlignment="Stretch" Margin="8,20,8,20"/>
-			<Button x:Name="inputButton" HorizontalAlignment="Stretch" Content="Configure Training" Click="Button_Click" Margin="8,0,8,0"/>
-			<TextBlock x:Name="trainingNameOutput"/>
+			<Button x:Name="inputButton" HorizontalAlignment="Stretch" Content="Configure Training" Click="Button_Click" Margin="8,0,8,20"/>
+			<Button Name="buttonRefreshList" HorizontalAlignment="Stretch" Margin="8,10,8,0" Click="ButtonRefresh_Click">Previous trainings (click to refresh)</Button>
+			<ListView Name="fetchedTrainingsList" Margin="8,10,0,0">
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<StackPanel Orientation="Horizontal">
+							<CheckBox Name="CheckBoxLoad" Checked="CheckBoxLoad_Checked" Content="{Binding ProgramName}" Margin="10,5" VerticalAlignment="Center"/>
+						</StackPanel>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
 		</StackPanel>
 	</Grid>
 </Page>

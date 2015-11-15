@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Microsoft.WindowsAzure.MobileServices;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Media.SpeechSynthesis;
@@ -16,13 +18,38 @@ using Windows.UI.Xaml.Navigation;
 
 namespace DocLouis {
 	public sealed partial class Program : Page {
+		private MobileServiceCollection<TrainingItem, TrainingItem> _items;
+		private IMobileServiceTable<TrainingItem> _trainingItemsTable = App.MobileService.GetTable<TrainingItem>();
+
 		public Program() {
 			this.InitializeComponent();
 		}
 
+		private async Task InsertTrainingItem(TrainingItem trainingItem) {
+			// This code inserts a new TodoItem into the database. When the operation completes
+			// and Mobile Services has assigned an Id, the item is added to the CollectionView
+			await _trainingItemsTable.InsertAsync(trainingItem);
+			_items.Add(trainingItem);
+
+			//await SyncAsync(); // offline sync
+		}
+
 		protected override void OnNavigatedTo(NavigationEventArgs e) {
 			base.OnNavigatedTo(e);
-			trainingName.Text = (String) e.Parameter + "'s Training";
+			MainScreenMessage msg = (MainScreenMessage) e.Parameter;
+			TrainingItem trainingItem = msg.getTrainingItem();
+			_items = msg.getItems();
+			_trainingItemsTable = msg.getTrainingItemsTable();
+
+			if (!msg.getIsNewTraining()) {
+				((ComboBoxItem)type.SelectedItem).Content = trainingItem.ExerciseType;
+				name.Text = trainingItem.ExerciseName;
+				duration_rep.Text = trainingItem.ExerciseType.Equals("duration") ? trainingItem.Duration.ToString() : trainingItem.Repetitions.ToString();
+				series.Text = trainingItem.Series.ToString();
+				break_duration.Text = trainingItem.BreakDuration.ToString();
+			}
+
+			trainingName.Text = trainingItem.ProgramName + "'s Training";
 		}
 
 		private void RefreshUI(object sender, SelectionChangedEventArgs e) {
@@ -92,6 +119,31 @@ namespace DocLouis {
 			}
 
 			return sentence;
+		}
+
+		private async void SaveProgram(object sender, RoutedEventArgs e) {
+			int durationRepetition = convert(duration_rep.Text);
+
+			TrainingItem trainingItem = new TrainingItem {
+				ProgramName = trainingName.Text,
+				ExerciseType = ((ComboBoxItem) type.SelectedItem).Content.ToString(),
+				ExerciseName = name.Text,
+				Duration = durationRepetition,
+				Repetitions = durationRepetition,
+				Series = convert(series.Text),
+				BreakDuration = convert(break_duration.Text)
+			};
+
+			await InsertTrainingItem(trainingItem);
+		}
+
+		private int convert(String element) {
+			int number = 0;
+			bool convert = int.TryParse(element, out number);
+			if (!convert) {
+				number = 0;
+			}
+			return number;
 		}
 	}
 }

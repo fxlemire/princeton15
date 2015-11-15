@@ -99,6 +99,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\TrainingItem.cs" />
+    <Compile Include="Views\MainScreenMessage.cs" />
     <Compile Include="Views\Program.xaml.cs">
       <DependentUpon>Program.xaml</DependentUpon>
     </Compile>
