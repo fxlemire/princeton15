@@ -27,15 +27,10 @@
 		</VisualStateManager.VisualStateGroups>
 
 		<StackPanel x:Name="contentPanel" Margin="8,32,0,0">
-			<TextBlock Text="Welcome to Doc Louis' Training Program" FontSize="18" Margin="0,0,0,10"/>
-			<TextBlock Text="Sign in using:" Margin="8,0,0,0"/>
-			<Grid>
-				<Button Name="ButtonLoginFacebook" HorizontalAlignment="Left" Margin="8,10,8,20" Click="ButtonLogin_Click" Visibility="Visible" Width="90" Background="Blue" Foreground="White">Facebook</Button>
-				<Button Name="ButtonLoginGoogle" HorizontalAlignment="Center" Margin="8,10,8,20" Click="ButtonLogin_Click" Visibility="Visible" Width="90" Background="Red" Foreground="White">Google</Button>
-				<Button Name="ButtonLoginTwitter" HorizontalAlignment="Right" Margin="8,10,8,20" Click="ButtonLogin_Click" Visibility="Visible" Width="90" Background="Aqua">Twitter</Button>
-			</Grid>
+			<TextBlock Text="Welcome to" HorizontalAlignment="Center" FontSize="18" FontWeight="Bold"/>
+			<TextBlock Text="Doc Louis' Training Program" HorizontalAlignment="Center" FontSize="18" Margin="0,0,0,20" FontWeight="Bold"/>
 			<TextBlock Text="What's the name of your training?"/>
-			<TextBox x:Name="trainingNameInput" HorizontalAlignment="Stretch" Margin="8,20,8,20"/>
+			<TextBox x:Name="trainingNameInput" HorizontalAlignment="Stretch" Margin="8,20,8,20" PlaceholderText="Training name"/>
 			<Button Name="inputButton" HorizontalAlignment="Stretch" Margin="8,0,8,0" Click="Button_Click" Content="Configure Training"/>
 			<Button Name="buttonRefreshList" HorizontalAlignment="Stretch" Margin="8,30,8,0" Click="ButtonRefresh_Click">Previous trainings (click to refresh)</Button>
 			<ListView Name="fetchedTrainingsList" Margin="8,10,0,0">

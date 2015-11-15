@@ -100,6 +100,9 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="DataModel\TrainingItem.cs" />
+    <Compile Include="Views\LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainScreenMessage.cs" />
     <Compile Include="Views\Program.xaml.cs">
       <DependentUpon>Program.xaml</DependentUpon>
@@ -130,6 +133,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Views\LoginPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Program.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
