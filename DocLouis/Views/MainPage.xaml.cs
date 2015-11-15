@@ -28,50 +28,6 @@ namespace DocLouis
 		private MobileServiceCollection<TrainingItem, TrainingItem> _items;
 		private IMobileServiceTable<TrainingItem> _trainingItemsTable = App.MobileService.GetTable<TrainingItem>();
 		Frame rootFrame = Window.Current.Content as Frame;
-		private MobileServiceUser _user;
-
-		private async System.Threading.Tasks.Task AuthenticateAsync(String service) {
-			string message;
-			try {
-				if (service.Equals("facebook")) {
-					_user = await App.MobileService.LoginAsync(MobileServiceAuthenticationProvider.Facebook);
-				} else if (service.Equals("google")) {
-					_user = await App.MobileService.LoginAsync(MobileServiceAuthenticationProvider.Google);
-				} else {
-					_user = await App.MobileService.LoginAsync(MobileServiceAuthenticationProvider.Twitter);
-				}
-				message = string.Format("You are now signed in - {0}", _user.UserId);
-			} catch (InvalidOperationException) {
-				message = "You must log in. Login Required";
-			}
-
-			var dialog = new MessageDialog(message);
-			dialog.Commands.Add(new UICommand("OK"));
-			await dialog.ShowAsync();
-		}
-
-		private async void ButtonLogin_Click(object sender, RoutedEventArgs e) {
-			// Login the user and then load data from the mobile service.
-			Button signupButton = (Button) sender;
-			String service;
-			if (signupButton.Name.Equals("ButtonLoginFacebook")) {
-				service = "facebook";
-			} else if (signupButton.Name.Equals("ButtonLoginGoogle")) {
-				service = "google";
-			} else {
-				service = "twitter";
-			}
-
-			await AuthenticateAsync(service);
-
-			if (_user != null) {
-				// Hide the login button and load items from the mobile service.
-				this.ButtonLoginFacebook.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-				this.ButtonLoginGoogle.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-				this.ButtonLoginTwitter.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-				await RefreshTodoItems();
-			}
-		}
 
 		public MainPage()
         {
@@ -113,6 +69,10 @@ namespace DocLouis
 			CheckBox cb = (CheckBox) sender;
 			TrainingItem item = cb.DataContext as TrainingItem;
 			rootFrame.Navigate(typeof(Program), new MainScreenMessage(false, item, _items, _trainingItemsTable));
+		}
+
+		protected async override void OnNavigatedTo(NavigationEventArgs e) {
+			await RefreshTodoItems();
 		}
 	}
 }
