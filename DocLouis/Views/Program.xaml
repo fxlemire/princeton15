@@ -24,6 +24,7 @@
 				</VisualStateGroup>
 			</VisualStateManager.VisualStateGroups>
 
+			
 			<StackPanel x:Name="contentPanel" Margin="0,32,0,0">
 				<TextBlock x:Name="trainingName" Margin="8,0,0,40" FontSize="24"/>
 				<ListView x:Name="listView" Height="226">
@@ -39,6 +40,7 @@
 				<Button x:Name="save" Content="Save Training" HorizontalAlignment="Right" Margin="13 0 18 20" Click="SaveProgram"/>
 				<Button x:Name="start" Content="Start!" HorizontalAlignment="Stretch" Height="40" Click="Start" Margin="13 0 18 0"/>
 			</StackPanel>
+			<Image x:Name="backButton" Source="/Assets/backarrow.png" HorizontalAlignment="Left" Height="50" VerticalAlignment="Bottom" Margin="10 0 0 20" PointerPressed="goBack" Tapped="goBack"/>
 			<MediaElement x:Name="mediaElement" HorizontalAlignment="Left" Height="100" Margin="250,530,0,0" VerticalAlignment="Top" Width="100"/>
 		</Grid>
 	</Grid>

@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace DocLouis {
 	public sealed partial class Program : Page {
+		Frame rootFrame = Window.Current.Content as Frame;
 		private MobileServiceCollection<TrainingItem, TrainingItem> _items;
 		private IMobileServiceTable<TrainingItem> _trainingItemsTable = App.MobileService.GetTable<TrainingItem>();
 
@@ -144,6 +145,14 @@ namespace DocLouis {
 				number = 0;
 			}
 			return number;
+		}
+
+		private void goBack(object sender, PointerRoutedEventArgs e) {
+			rootFrame.Navigate(typeof(MainPage), null);
+		}
+
+		private void goBack(object sender, TappedRoutedEventArgs e) {
+			rootFrame.Navigate(typeof(MainPage), null);
 		}
 	}
 }
