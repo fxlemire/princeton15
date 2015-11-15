@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Security.Credentials;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -17,25 +18,80 @@ namespace DocLouis {
 			this.InitializeComponent();
 		}
 
-		private async System.Threading.Tasks.Task AuthenticateAsync(String service) {
+		private async System.Threading.Tasks.Task AuthenticateAsync(String provider) {
 			string message;
-			try {
-				if (service.Equals("facebook")) {
-					_user = await App.MobileService.LoginAsync(MobileServiceAuthenticationProvider.Facebook);
-				} else if (service.Equals("google")) {
-					_user = await App.MobileService.LoginAsync(MobileServiceAuthenticationProvider.Google);
-				} else {
-					_user = await App.MobileService.LoginAsync(MobileServiceAuthenticationProvider.Twitter);
-				}
-				message = string.Format("You are now signed in - {0}", _user.UserId);
-			} catch (InvalidOperationException) {
-				message = "You must log in. Login Required";
-			}
 
-			var dialog = new MessageDialog(message);
-			dialog.Commands.Add(new UICommand("OK"));
-			await dialog.ShowAsync();
+			// Use the PasswordVault to securely store and access credentials.
+			PasswordVault vault = new PasswordVault();
+			PasswordCredential credential = null;
+
+			while (credential == null) {
+				try {
+					// Try to get an existing credential from the vault.
+					credential = vault.FindAllByResource(provider).FirstOrDefault();
+				} catch (Exception) {
+					// When there is no matching resource an error occurs, which we ignore.
+				}
+
+				if (credential != null) {
+					// Create a user from the stored credentials.
+					_user = new MobileServiceUser(credential.UserName);
+					credential.RetrievePassword();
+					_user.MobileServiceAuthenticationToken = credential.Password;
+
+					// Set the user from the stored credentials.
+					App.MobileService.CurrentUser = _user;
+
+					try {
+						// Try to return an item now to determine if the cached credential has expired.
+						await App.MobileService.GetTable<TrainingItem>().Take(1).ToListAsync();
+					} catch (MobileServiceInvalidOperationException ex) {
+						if (ex.Response.StatusCode == System.Net.HttpStatusCode.Unauthorized) {
+							// Remove the credential with the expired token.
+							vault.Remove(credential);
+							credential = null;
+							continue;
+						}
+					}
+				} else {
+					try {
+						// Login with the identity provider.
+						_user = await App.MobileService.LoginAsync(provider);
+
+						// Create and store the user credentials.
+						credential = new PasswordCredential(provider, _user.UserId, _user.MobileServiceAuthenticationToken);
+						vault.Add(credential);
+					} catch (MobileServiceInvalidOperationException ex) {
+						message = "You must log in. Login Required";
+					}
+				}
+
+				message = string.Format("You are now logged in - {0}", _user.UserId);
+				var dialog = new MessageDialog(message);
+				dialog.Commands.Add(new UICommand("OK"));
+				await dialog.ShowAsync();
+			}
 		}
+
+		//		private async System.Threading.Tasks.Task AuthenticateAsync(String service) {
+		//			string message;
+		//			try {
+		//				if (service.Equals("facebook")) {
+		//					_user = await App.MobileService.LoginAsync(MobileServiceAuthenticationProvider.Facebook);
+		//				} else if (service.Equals("google")) {
+		//					_user = await App.MobileService.LoginAsync(MobileServiceAuthenticationProvider.Google);
+		//				} else {
+		//					_user = await App.MobileService.LoginAsync(MobileServiceAuthenticationProvider.Twitter);
+		//				}
+		//				message = string.Format("You are now signed in - {0}", _user.UserId);
+		//			} catch (InvalidOperationException) {
+		//				message = "You must log in. Login Required";
+		//			}
+		//
+		//			var dialog = new MessageDialog(message);
+		//			dialog.Commands.Add(new UICommand("OK"));
+		//			await dialog.ShowAsync();
+		//		}
 
 		private async void ButtonLogin_Click(object sender, RoutedEventArgs e) {
 			// Login the user and then load data from the mobile service.
@@ -48,8 +104,11 @@ namespace DocLouis {
 			} else {
 				service = "twitter";
 			}
-
-			await AuthenticateAsync(service);
+			try {
+				await AuthenticateAsync(service);
+			} catch (System.InvalidOperationException) {
+				//user cancelled login
+			}
 
 			if (_user != null) {
 				// Hide the login button and load items from the mobile service.
