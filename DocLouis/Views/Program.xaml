@@ -36,7 +36,8 @@
 					<TextBox x:Name="series" TextWrapping="Wrap" Text="" PlaceholderText="Series" Width="330"/>
 					<TextBox x:Name="break_duration" TextWrapping="Wrap" Text="" PlaceholderText="Break Duration" Width="330"/>
 				</ListView>
-				<Button x:Name="start" Content="Start!" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="Start"/>
+				<Button x:Name="save" Content="Save Training" HorizontalAlignment="Right" Margin="13 0 18 20" Click="SaveProgram"/>
+				<Button x:Name="start" Content="Start!" HorizontalAlignment="Stretch" Height="40" Click="Start" Margin="13 0 18 0"/>
 			</StackPanel>
 			<MediaElement x:Name="mediaElement" HorizontalAlignment="Left" Height="100" Margin="250,530,0,0" VerticalAlignment="Top" Width="100"/>
 		</Grid>

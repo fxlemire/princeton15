@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.WindowsAzure.MobileServices;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,11 +23,18 @@ namespace DocLouis
     /// </summary>
     sealed partial class App : Application
     {
-        /// <summary>
-        /// Initializes the singleton application object.  This is the first line of authored code
-        /// executed, and as such is the logical equivalent of main() or WinMain().
-        /// </summary>
-        public App()
+		// This MobileServiceClient has been configured to communicate with your Mobile Service's url
+		// and application key. You're all set to start working with your Mobile Service!
+		public static MobileServiceClient MobileService = new MobileServiceClient(
+			"https://doclouis.azure-mobile.net/",
+			"adminKeyHere"
+		);
+
+		/// <summary>
+		/// Initializes the singleton application object.  This is the first line of authored code
+		/// executed, and as such is the logical equivalent of main() or WinMain().
+		/// </summary>
+		public App()
         {
 			Microsoft.ApplicationInsights.WindowsAppInitializer.InitializeAsync(
 				Microsoft.ApplicationInsights.WindowsCollectors.Metadata |
