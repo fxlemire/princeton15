@@ -17,12 +17,12 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace DocLouis {
-	public sealed partial class Program : Page {
+	public sealed partial class TrainingProgram : Page {
 		Frame rootFrame = Window.Current.Content as Frame;
 		private MobileServiceCollection<TrainingItem, TrainingItem> _items;
 		private IMobileServiceTable<TrainingItem> _trainingItemsTable = App.MobileService.GetTable<TrainingItem>();
 
-		public Program() {
+		public TrainingProgram() {
 			this.InitializeComponent();
 		}
 
@@ -37,7 +37,7 @@ namespace DocLouis {
 
 		protected override void OnNavigatedTo(NavigationEventArgs e) {
 			base.OnNavigatedTo(e);
-			MainScreenMessage msg = (MainScreenMessage) e.Parameter;
+			MainScreenMessage msg = (MainScreenMessage)e.Parameter;
 			TrainingItem trainingItem = msg.getTrainingItem();
 			_items = msg.getItems();
 			_trainingItemsTable = msg.getTrainingItemsTable();
@@ -50,11 +50,14 @@ namespace DocLouis {
 				break_duration.Text = trainingItem.BreakDuration.ToString();
 			}
 
-			trainingName.Text = trainingItem.ProgramName + "'s Training";
+			trainingName.Text = trainingItem.ProgramName;
+			if (!trainingName.Text.Contains("'s Training")) {
+				trainingName.Text += "'s Training";
+			}
 		}
 
 		private void RefreshUI(object sender, SelectionChangedEventArgs e) {
-			ComboBoxItem typeComboBox = (ComboBoxItem) type.SelectedItem;
+			ComboBoxItem typeComboBox = (ComboBoxItem)type.SelectedItem;
 			if (duration_rep != null) {
 				if (typeComboBox.Content.ToString().Equals("duration")) {
 					duration_rep.PlaceholderText = "Duration";
@@ -67,10 +70,22 @@ namespace DocLouis {
 		private async void Start(object sender, RoutedEventArgs e) {
 			string sentence = processSentence();
 			SpeechSynthesizer synthesizer = new SpeechSynthesizer();
-			var voiceStream = await synthesizer.SynthesizeTextToStreamAsync(sentence);
+			SpeechSynthesisStream voiceStream = await synthesizer.SynthesizeTextToStreamAsync(sentence);
 			mediaElement.SetSource(voiceStream, voiceStream.ContentType);
 			mediaElement.Play();
-
+			await Task.Delay(5000);
+			voiceStream = await synthesizer.SynthesizeTextToStreamAsync("Let's Start in");
+			mediaElement.SetSource(voiceStream, voiceStream.ContentType);
+			mediaElement.Play();
+			await countdown(3);
+			voiceStream = await synthesizer.SynthesizeTextToStreamAsync("GO!");
+			mediaElement.SetSource(voiceStream, voiceStream.ContentType);
+			mediaElement.Play();
+			await Task.Delay((convert(duration_rep.Text) - 6) * 1000);
+			await countdown(5);
+			voiceStream = await synthesizer.SynthesizeTextToStreamAsync("Done!");
+			mediaElement.SetSource(voiceStream, voiceStream.ContentType);
+			mediaElement.Play();
 			//			wait(2000);
 			//
 			//			synthesizer.Speak("Let's start!");
@@ -92,19 +107,22 @@ namespace DocLouis {
 			//			}
 		}
 
-		//		private void countdown(int duration) {
-		//			SpeechSynthesizer synthesizer = new SpeechSynthesizer();
-		//
-		//			while (duration > 0) {
-		//				synthesizer.SpeakAsync(Convert.ToString(duration));
-		//				wait(1000);
-		//				--duration;
-		//			}
-		//		}
+		private async Task countdown(int duration) {
+			SpeechSynthesizer synthesizer = new SpeechSynthesizer();
+			SpeechSynthesisStream voiceStream;
+
+			while (duration > 0) {
+				voiceStream = await synthesizer.SynthesizeTextToStreamAsync(duration.ToString());
+				mediaElement.SetSource(voiceStream, voiceStream.ContentType);
+				mediaElement.Play();
+				await Task.Delay(1000);
+				--duration;
+			}
+		}
 
 		private string processSentence() {
 			string sentence = name.Text;
-			ComboBoxItem typeComboBox = (ComboBoxItem) type.SelectedItem;
+			ComboBoxItem typeComboBox = (ComboBoxItem)type.SelectedItem;
 			switch (typeComboBox.Content.ToString()) {
 				case "duration":
 					sentence += " for ";
@@ -127,7 +145,7 @@ namespace DocLouis {
 
 			TrainingItem trainingItem = new TrainingItem {
 				ProgramName = trainingName.Text,
-				ExerciseType = ((ComboBoxItem) type.SelectedItem).Content.ToString(),
+				ExerciseType = ((ComboBoxItem)type.SelectedItem).Content.ToString(),
 				ExerciseName = name.Text,
 				Duration = durationRepetition,
 				Repetitions = durationRepetition,

@@ -53,7 +53,7 @@ namespace DocLouis
 
 		private void Button_Click(object sender, RoutedEventArgs e) {
 			TrainingItem trainingItem = new TrainingItem { ProgramName = trainingNameInput.Text };
-			rootFrame.Navigate(typeof(Program), new MainScreenMessage(true, trainingItem, _items, _trainingItemsTable));
+			rootFrame.Navigate(typeof(TrainingProgram), new MainScreenMessage(true, trainingItem, _items, _trainingItemsTable));
 		}
 
 		private async void ButtonRefresh_Click(object sender, RoutedEventArgs e) {
@@ -68,7 +68,7 @@ namespace DocLouis
 		private void CheckBoxLoad_Checked(object sender, RoutedEventArgs e) {
 			CheckBox cb = (CheckBox) sender;
 			TrainingItem item = cb.DataContext as TrainingItem;
-			rootFrame.Navigate(typeof(Program), new MainScreenMessage(false, item, _items, _trainingItemsTable));
+			rootFrame.Navigate(typeof(TrainingProgram), new MainScreenMessage(false, item, _items, _trainingItemsTable));
 		}
 
 		protected async override void OnNavigatedTo(NavigationEventArgs e) {
