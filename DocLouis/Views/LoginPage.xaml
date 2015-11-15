@@ -8,7 +8,7 @@
     mc:Ignorable="d">
 
 	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-		<VisualStateManager.VisualStateGroups>
+		<!--VisualStateManager.VisualStateGroups>
 			<VisualStateGroup>
 				<VisualState x:Name="wideState">
 					<VisualState.StateTriggers>
@@ -34,7 +34,7 @@
 			</VisualStateGroup>
 		</VisualStateManager.VisualStateGroups>
 
-		<Image Name="Written87" Source="/Assets/87.png" Width="100" Margin="130 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+		<Image Name="Written87" Source="/Assets/87.png" Width="100" Margin="130 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/-->
 		<StackPanel x:Name="contentPanel" Margin="8,32,0,0">
 			<TextBlock Name="AppTitle" Text="Doc Louis's" Margin="8,50,0,0" FontSize="50" HorizontalAlignment="Center" FontWeight="Bold"/>
 			<TextBlock Name="SignInRequest" HorizontalAlignment="Center" Text="Please Sign In" FontSize="30" Margin="8,20,0,20"/>
@@ -42,9 +42,9 @@
 			<Button Name="ButtonLoginGoogle" HorizontalAlignment="Center" Margin="8,10,8,20" FontSize="30" Click="ButtonLogin_Click" Visibility="Visible" Width="150" Background="Red" Foreground="White">Google</Button>
 			<Button Name="ButtonLoginTwitter" HorizontalAlignment="Center" Margin="8,10,8,20" FontSize="30" Click="ButtonLogin_Click" Visibility="Visible" Width="150" Background="Aqua">twitter</Button>
 		</StackPanel>
-		<Image Name="WrittenLets" Source="/Assets/lets.png" Width="100" Margin="0 0 0 20" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+		<!--Image Name="WrittenLets" Source="/Assets/lets.png" Width="100" Margin="0 0 0 20" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
 		<Image Name="DocLouisBike" Source="/Assets/doc-louis.jpg" Width="100" Margin="0 0 0 30" VerticalAlignment="Bottom"/>
 		<Image Name="WrittenDo" Source="/Assets/do.png" Width="100" Margin="0 0 30 80" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
-		<Image Name="WrittenThis" Source="/Assets/this.png" Width="100" Margin="0 20 0 0" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+		<Image Name="WrittenThis" Source="/Assets/this.png" Width="100" Margin="0 20 0 0" HorizontalAlignment="Right" VerticalAlignment="Bottom"/-->
 	</Grid>
 </Page>

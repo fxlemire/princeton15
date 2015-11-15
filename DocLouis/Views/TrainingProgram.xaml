@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="DocLouis.Program"
+    x:Class="DocLouis.TrainingProgram"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:DocLouis"
@@ -8,7 +8,6 @@
     mc:Ignorable="d">
 
 	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-		<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 			<VisualStateManager.VisualStateGroups>
 				<VisualStateGroup>
 					<VisualState x:Name="wideState">
@@ -43,5 +42,4 @@
 			<Image x:Name="backButton" Source="/Assets/backarrow.png" HorizontalAlignment="Left" Height="50" VerticalAlignment="Bottom" Margin="10 0 0 20" PointerPressed="goBack" Tapped="goBack"/>
 			<MediaElement x:Name="mediaElement" HorizontalAlignment="Left" Height="100" Margin="250,530,0,0" VerticalAlignment="Top" Width="100"/>
 		</Grid>
-	</Grid>
 </Page>

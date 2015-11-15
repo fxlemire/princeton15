@@ -104,8 +104,8 @@
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainScreenMessage.cs" />
-    <Compile Include="Views\Program.xaml.cs">
-      <DependentUpon>Program.xaml</DependentUpon>
+    <Compile Include="Views\TrainingProgram.xaml.cs">
+      <DependentUpon>TrainingProgram.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -143,7 +143,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Program.xaml">
+    <Page Include="Views\TrainingProgram.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
